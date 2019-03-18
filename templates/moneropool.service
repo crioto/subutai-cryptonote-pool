@@ -1,0 +1,16 @@
+[Unit]
+Description=Monero Pool Service on Subutai
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/node /opt/pool/init.js -config=/etc/pool_config.json
+WorkingDirectory=/opt/pool
+Restart=always
+RestartSec=10
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=nodejs-example
+Environment=NODE_ENV=production PORT=1337
+
+[Install]
+WantedBy=multi-user.target

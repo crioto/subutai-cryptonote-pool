@@ -1,0 +1,17 @@
+[Unit]
+Description=Monero Full Node
+After=network.target
+
+[Service]
+User=monero
+Group=monero
+WorkingDirectory=/opt/monero-v0.14.0.2
+RuntimeDirectory=monero
+
+Type=forking
+PIDFile=/run/monero/monerod.pid
+ExecStart=/opt/monero-v0.14.0.2/monerod --detach --pidfile /run/monero/monerod.pid
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,51 @@
+{
+    "name": "${environmentName}",
+    "description": "Monero Pool",
+    "version": "1.0.0",
+    "author": "https://github.com/crioto",
+    "containers": [
+      {
+        "hostname": "moneropool",
+        "template": "debian-stretch",
+        "peer-criteria": "HTTP-GROUP",
+        "size": "${containerSize}"
+      }
+    ],
+    "peer-criteria": [
+      {
+        "name": "HTTP-GROUP"
+      }
+    ],
+    "ansible-configuration": {
+      "source-url": "https://github.com/crioto/subutai-cryptonote-pool/archive/master.zip",
+      "ansible-playbook": "playbook.yaml",
+      "extra-vars": [
+        {
+          "key": "environmentName",
+          "value": "${environmentName}"
+        }
+      ],
+      "groups": [
+        {
+          "name": "xmrig",
+          "hostnames": [
+            "xmrig"
+          ]
+        }
+      ]
+    },
+    "user-variables": {
+      "environmentName": {
+        "description": "Enter the environment name",
+        "type": "string",
+        "default": "monero",
+        "validation": "[a-zA-Z0-9]+"
+      },
+      "containerSize": {
+        "description": "Container Size",
+        "type": "enum",
+        "default": "TINY",
+        "validation": "TINY,SMALL,MEDIUM,LARGE,HUGE"
+      }
+    }
+  }

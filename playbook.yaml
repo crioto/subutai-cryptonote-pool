@@ -1,0 +1,102 @@
+---
+
+- hosts: bpdev
+  remote_user: root
+  tasks:
+    - name: Upgrade OS
+      apt:
+        update_cache: true
+        upgrade: true
+    - name: Install dependencies
+      apt: 
+        name: ['ca-certificates', 'nginx', 'curl', 'software-properties-common', 'build-essential', 'libssl-dev', 'libboost-all-dev', 'git']
+        state: present
+    - name: Create monero group
+      group:
+        name: monero
+    - name: Create monero user
+      user:
+        group: monero
+        name: monero
+        shell: /usr/sbin/nologin
+    - name: Download monero
+      get_url:
+        url: https://downloads.getmonero.org/cli/linux64
+        dest: /opt/monero-linux-x64-v0.14.0.2.tar.bz2
+        checksum: sha256:4dd5cd9976eda6b33b16821e79e671527b78a1c9bfb3d973efe84b824642dd21
+    - name: Unpack monero
+      unarchive:
+        src: /opt/monero-linux-x64-v0.14.0.2.tar.bz2
+        dest: /opt
+        remote_src: yes
+    - name: Create monerod service
+      template: 
+        src: templates/monerod.service
+        dest: /etc/systemd/system/monerod.service
+        mode: 0644
+    - name: Start monero service
+      systemd:
+        daemon_reload: yes
+        name: monerod
+        state: started
+        enabled: true
+        masked: no
+    - name: Download script for node.js setup
+      get_url:
+        url: https://deb.nodesource.com/setup_10.x
+        dest: /tmp/setup_11.sh
+    - name: Prepare for node.js installation
+      command: bash /tmp/setup_11.sh
+    - name: Update packages cache
+      apt:
+        update_cache: true
+    - name: Install node.js
+      apt: 
+        name: nodejs
+        state: present
+    - name: Download redis
+      get_url:
+        url: http://download.redis.io/redis-stable.tar.gz
+        dest: /opt/redis-stable.tar.gz
+    - name: Unpack redis
+      unarchive:
+        src: /opt/redis-stable.tar.gz
+        dest: /opt
+        remote_src: yes
+    - name: Build redis
+      make:
+        chdir: /opt/redis-stable
+    - name: Install redis
+      make:
+        chdir: /opt/redis-stable
+        target: install
+    - name: Clone pool software
+      git:
+        clone: yes
+        repo: https://github.com/zone117x/node-cryptonote-pool.git
+        dest: /opt/pool
+    - name: npm update
+      command: npm update
+      args:
+        chdir: /opt/pool
+    - name: Copy pool configuration
+      template:
+        src: templates/pool_config.json
+        dest: /etc/pool_config.json
+    - name: Copy pool service file
+      template:
+        src: templates/moneropool.service
+        dest: /etc/systemd/system/moneropool.service
+    - name: Start monero pool service
+      systemd:
+        daemon_reload: yes
+        name: moneropool
+        state: started
+        enabled: true
+        masked: no
+    - name: Copy website contents
+      command: cp -r /opt/pool/website_example/* /usr/share/nginx/html/
+    - name: Copy website configuration
+      template:
+        src: templates/config.js
+        dest: /usr/share/nginx/html/config.js
