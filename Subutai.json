@@ -45,7 +45,7 @@
                     "peer-criteria": "HTTP-GROUP",
                     "internal-port": "${highEndPort}",
                     "external-port": "${highEndPort}"
-                },
+                }
             ]
         }
     ],
