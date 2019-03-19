@@ -126,19 +126,19 @@
         },
         "midEndPort": {
             "description": "Mid End Port Number",
-            "type": "integer",
+            "type": "string",
             "default": 5555,
             "validation": "[0-9]+"
         },
         "highEndPort": {
             "description": "High End Port Number",
-            "type": "integer",
+            "type": "string",
             "default": 7777,
             "validation": "[0-9]+"
         },
         "apiPort": {
             "description": "API Port Number",
-            "type": "integer",
+            "type": "string",
             "default": 8117,
             "validation": "[0-9]+"
         },
