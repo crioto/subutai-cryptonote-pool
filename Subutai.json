@@ -4,116 +4,154 @@
     "version": "1.0.0",
     "author": "https://github.com/crioto",
     "containers": [
-      {
-        "hostname": "moneropool",
-        "template": "debian-stretch",
-        "peer-criteria": "HTTP-GROUP",
-        "size": "${containerSize}"
-      }
+        {
+            "hostname": "moneropool",
+            "template": "debian-stretch",
+            "peer-criteria": "HTTP-GROUP",
+            "size": "${containerSize}",
+            "port-mapping": [
+                {
+                    "protocol": "https",
+                    "domain": "${poolHost}",
+                    "peer-criteria": "HTTP-GROUP",
+                    "internal-port": "443",
+                    "external-port": "443",
+                    "ssl_backend": "true"
+                },
+                {
+                    "protocol": "http",
+                    "domain": "${poolHost}",
+                    "peer-criteria": "HTTP-GROUP",
+                    "internal-port": "${apiPort}",
+                    "external-port": "${apiPort}"
+                },
+                {
+                    "protocol": "tcp",
+                    "domain": "${poolHost}",
+                    "peer-criteria": "HTTP-GROUP",
+                    "internal-port": "${lowEndPort}",
+                    "external-port": "${lowEndPort}"
+                },
+                {
+                    "protocol": "tcp",
+                    "domain": "${poolHost}",
+                    "peer-criteria": "HTTP-GROUP",
+                    "internal-port": "${midEndPort}",
+                    "external-port": "${midEndPort}"
+                },
+                {
+                    "protocol": "tcp",
+                    "domain": "${poolHost}",
+                    "peer-criteria": "HTTP-GROUP",
+                    "internal-port": "${highEndPort}",
+                    "external-port": "${highEndPort}"
+                },
+            ]
+        }
     ],
     "peer-criteria": [
-      {
-        "name": "HTTP-GROUP"
-      }
+        {
+            "name": "HTTP-GROUP"
+        }
     ],
     "ansible-configuration": {
-      "source-url": "https://github.com/crioto/subutai-cryptonote-pool/archive/master.zip",
-      "ansible-playbook": "playbook.yaml",
-      "extra-vars": [
-        {
-          "key": "environmentName",
-          "value": "${environmentName}"
-        },
-        {
-            "key": "poolAddress",
-            "value": "${poolAddress}"
-        },
-        {
-            "key": "lowEndPort",
-            "value": "${lowEndPort}"
-        },
-        {
-            "key": "midEndPort",
-            "value": "${midEndPort}"
-        },
-        {
-            "key": "highEndPort",
-            "value": "${highEndPort}"
-        },
-        {
-            "key": "apiPort",
-            "value": "${apiPort}"
-        },
-        {
-            "key": "poolHost",
-            "value": "${poolHost}"
-        },
-        {
-            "key": "contactEmail",
-            "value": "${contactEmail}"
-        }
-      ],
-      "groups": [
-        {
-          "name": "moneropool",
-          "hostnames": [
-            "moneropool"
-          ]
-        }
-      ]
+        "source-url": "https://github.com/crioto/subutai-cryptonote-pool/archive/master.zip",
+        "ansible-playbook": "playbook.yaml",
+        "extra-vars": [
+            {
+                "key": "environmentName",
+                "value": "${environmentName}"
+            },
+            {
+                "key": "poolAddress",
+                "value": "${poolAddress}"
+            },
+            {
+                "key": "lowEndPort",
+                "value": "${lowEndPort}"
+            },
+            {
+                "key": "midEndPort",
+                "value": "${midEndPort}"
+            },
+            {
+                "key": "highEndPort",
+                "value": "${highEndPort}"
+            },
+            {
+                "key": "apiPort",
+                "value": "${apiPort}"
+            },
+            {
+                "key": "poolHost",
+                "value": "${poolHost}"
+            },
+            {
+                "key": "contactEmail",
+                "value": "${contactEmail}"
+            }
+        ],
+        "groups": [
+            {
+                "name": "moneropool",
+                "hostnames": [
+                    "moneropool"
+                ]
+            }
+        ]
     },
     "user-variables": {
-      "environmentName": {
-        "description": "Enter the environment name",
-        "type": "string",
-        "default": "monero",
-        "validation": "[a-zA-Z0-9]+"
-      },
-      "containerSize": {
-        "description": "Container Size",
-        "type": "enum",
-        "default": "TINY",
-        "validation": "TINY,SMALL,MEDIUM,LARGE,HUGE"
-      },
-      "poolAddress": {
-        "description": "Pool wallet",
-        "type": "string",
-        "default": ""
-      },
-      "lowEndPort": {
-        "description": "Low End Port Number",
-        "type": "string",
-        "default": "3333", 
-        "validation": "[0-9]+"
-      },
-      "midEndPort": {
-        "description": "Mid End Port Number",
-        "type": "integer",
-        "default": 5555,
-        "validation": "[0-9]+"
-      },
-      "highEndPort": {
-        "description": "High End Port Number",
-        "type": "integer",
-        "default": 7777,
-        "validation": "[0-9]+"
-      },
-      "apiPort": {
-        "description": "API Port Number",
-        "type": "integer",
-        "default": 8117,
-        "validation": "[0-9]+"
-      },
-      "poolHost": {
-        "description": "Pool hostname",
-        "type": "domain",
-        "default": "change.the.domain",
-        "validation": "[a-zA-Z0-9]+"
-      }, 
-      "contactEmail": {
-        "description": "Contact email address",
-        "type": "string",
-        "default": "youremail@example.com"
-      }
+        "environmentName": {
+            "description": "Enter the environment name",
+            "type": "string",
+            "default": "monero",
+            "validation": "[a-zA-Z0-9]+"
+        },
+        "containerSize": {
+            "description": "Container Size",
+            "type": "enum",
+            "default": "TINY",
+            "validation": "TINY,SMALL,MEDIUM,LARGE,HUGE"
+        },
+        "poolAddress": {
+            "description": "Pool wallet",
+            "type": "string",
+            "default": ""
+        },
+        "lowEndPort": {
+            "description": "Low End Port Number",
+            "type": "string",
+            "default": "3333", 
+            "validation": "[0-9]+"
+        },
+        "midEndPort": {
+            "description": "Mid End Port Number",
+            "type": "integer",
+            "default": 5555,
+            "validation": "[0-9]+"
+        },
+        "highEndPort": {
+            "description": "High End Port Number",
+            "type": "integer",
+            "default": 7777,
+            "validation": "[0-9]+"
+        },
+        "apiPort": {
+            "description": "API Port Number",
+            "type": "integer",
+            "default": 8117,
+            "validation": "[0-9]+"
+        },
+        "poolHost": {
+            "description": "Pool hostname",
+            "type": "domain",
+            "default": "change.the.domain",
+            "validation": "[a-zA-Z0-9]+"
+        }, 
+        "contactEmail": {
+            "description": "Contact email address",
+            "type": "string",
+            "default": "youremail@example.com"
+        }
     }
-  }
+}
