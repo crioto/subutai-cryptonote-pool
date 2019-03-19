@@ -82,23 +82,27 @@
       },
       "lowEndPort": {
         "description": "Low End Port Number",
-        "type": "integer",
-        "default": 3333 
+        "type": "string",
+        "default": "3333", 
+        "validation": "[0-9]+"
       },
       "midEndPort": {
         "description": "Mid End Port Number",
         "type": "integer",
-        "default": 5555
+        "default": 5555,
+        "validation": "[0-9]+"
       },
       "highEndPort": {
         "description": "High End Port Number",
         "type": "integer",
-        "default": 7777
+        "default": 7777,
+        "validation": "[0-9]+"
       },
       "apiPort": {
         "description": "API Port Number",
         "type": "integer",
-        "default": 8117
+        "default": 8117,
+        "validation": "[0-9]+"
       },
       "poolHost": {
         "description": "Pool hostname",
