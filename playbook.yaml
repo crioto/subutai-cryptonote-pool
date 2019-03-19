@@ -1,6 +1,6 @@
 ---
 
-- hosts: bpdev
+- hosts: moneropool
   remote_user: root
   tasks:
     - name: Upgrade OS
