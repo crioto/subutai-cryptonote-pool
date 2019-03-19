@@ -1,7 +1,7 @@
 {
     "name": "${environmentName}",
     "description": "Monero Pool",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "author": "https://github.com/crioto",
     "containers": [
         {
@@ -16,6 +16,14 @@
                     "peer-criteria": "HTTP-GROUP",
                     "internal-port": "443",
                     "external-port": "443",
+                    "ssl_backend": "true"
+                },
+                {
+                    "protocol": "http",
+                    "domain": "${poolHost}",
+                    "peer-criteria": "HTTP-GROUP",
+                    "internal-port": "80",
+                    "external-port": "80",
                     "ssl_backend": "true"
                 },
                 {
