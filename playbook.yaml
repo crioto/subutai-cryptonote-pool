@@ -75,6 +75,16 @@
         clone: yes
         repo: https://github.com/zone117x/node-cryptonote-pool.git
         dest: /opt/pool
+    - name: Copy website contents
+      shell: /bin/cp -r * /var/www/html/
+      args:
+        chdir: /opt/pool/website_example
+    - name: Replace bignum version
+      lineinfile:
+        path: /opt/pool/package.json
+        state: present
+        regexp: '^%bignum\s'
+        line: '"bignum": "0.13.0",'
     - name: npm update
       command: npm update
       args:
@@ -94,9 +104,7 @@
         state: started
         enabled: true
         masked: no
-    - name: Copy website contents
-      command: cp -r /opt/pool/website_example/* /usr/share/nginx/html/
     - name: Copy website configuration
       template:
         src: templates/config.js
-        dest: /usr/share/nginx/html/config.js
+        dest: /var/www/html/config.js

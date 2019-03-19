@@ -1,17 +1,17 @@
 /* Must point to the API setup in your config.json file. */
-var api = "http://poolhost:8117";
+var api = "http://{{ poolHost }}:{{ apiPort }}";
 
 /* Minimum units in a single coin, for Bytecoin its 100000000. */
 var coinUnits = 1000000000000;
 
 /* Pool server host to instruct your miners to point to.  */
-var poolHost = "cryppit.com";
+var poolHost = "{{ poolHost }}";
 
 /* IRC Server and room used for embedded KiwiIRC chat. */
 var irc = "irc.freenode.net/#monero";
 
 /* Contact email address. */
-var email = "support@cryppit.com";
+var email = "{{ contactEmail }}";
 
 /* Market stat display params from https://www.cryptonator.com/widget */
 var cryptonatorWidget = ["XMR-BTC", "XMR-USD", "XMR-EUR", "XMR-GBP"];

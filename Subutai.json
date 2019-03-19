@@ -23,13 +23,41 @@
         {
           "key": "environmentName",
           "value": "${environmentName}"
+        },
+        {
+            "key": "poolAddress",
+            "value": "${poolAddress}"
+        },
+        {
+            "key": "lowEndPort",
+            "value": "${lowEndPort}"
+        },
+        {
+            "key": "midEndPort",
+            "value": "${midEndPort}"
+        },
+        {
+            "key": "highEndPort",
+            "value": "${highEndPort}"
+        },
+        {
+            "key": "apiPort",
+            "value": "${apiPort}"
+        },
+        {
+            "key": "poolHost",
+            "value": "${poolHost}"
+        },
+        {
+            "key": "contactEmail",
+            "value": "${contactEmail}"
         }
       ],
       "groups": [
         {
-          "name": "xmrig",
+          "name": "moneropool",
           "hostnames": [
-            "xmrig"
+            "moneropool"
           ]
         }
       ]
@@ -46,6 +74,42 @@
         "type": "enum",
         "default": "TINY",
         "validation": "TINY,SMALL,MEDIUM,LARGE,HUGE"
+      },
+      "poolAddress": {
+        "description": "Pool wallet",
+        "type": "string",
+        "default": ""
+      },
+      "lowEndPort": {
+        "description": "Low End Port Number",
+        "type": "integer",
+        "default": 3333 
+      },
+      "midEndPort": {
+        "description": "Mid End Port Number",
+        "type": "integer",
+        "default": 5555
+      },
+      "highEndPort": {
+        "description": "High End Port Number",
+        "type": "integer",
+        "default": 7777
+      },
+      "apiPort": {
+        "description": "API Port Number",
+        "type": "integer",
+        "default": 8117
+      },
+      "poolHost": {
+        "description": "Pool hostname",
+        "type": "domain",
+        "default": "change.the.domain",
+        "validation": "[a-zA-Z0-9]+"
+      }, 
+      "contactEmail": {
+        "description": "Contact email address",
+        "type": "string",
+        "default": "youremail@example.com"
       }
     }
   }
