@@ -1,0 +1,8 @@
+---
+poolHost: "bpdev"
+lowEndPort: 3333
+midEndPort: 5555
+highEndPort: 7777
+apiPort: 8117
+contactEmail: "mail@example.com"
+poolAddress: "45ttWAJ3kywhgf8puQhWRagVtVaVRDsZd8grGN66X8ncdNVvKRi9bF73VTfVkXDnV9d82XhQxP3EeaQt93MTqLTzS1Yfx25"
