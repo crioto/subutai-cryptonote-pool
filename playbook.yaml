@@ -85,20 +85,8 @@
     - name: Clone pool software
       git:
         clone: yes
-        repo: https://github.com/zone117x/node-cryptonote-pool.git
+        repo: https://github.com/crioto/node-cryptonote-pool.git
         dest: /opt/pool
-    - name: Replace bignum version
-      lineinfile:
-        path: /opt/pool/package.json
-        state: present
-        regexp: '^\s+"bignum'
-        line: '"bignum": "0.13.0",'
-    - name: Fix bug in logging 
-      lineinfile:
-        path: /opt/pool/lib/logger.js
-        state: present
-        regexp: '^\s+fs\.appendFile(fileName, data)'
-        line: 'fs.appendFileSync(fileName, data);'
     - name: Copy website contents
       shell: /bin/cp -r * /var/www/html/
       args:
