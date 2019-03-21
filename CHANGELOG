@@ -1,3 +1,7 @@
+## Version 1.0.3 (03/21/2019)
+
+* Switched to fork of cryptonote-pool
+
 ## Version 1.0.2 (03/20/2019)
 
 * Fixed problem with redis startup
